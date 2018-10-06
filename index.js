@@ -1,12 +1,19 @@
 const express = require('express');
 const fs = require('fs');
 const appconfig = require('./config/appConfig');
-const 
 
 const app = express();
 
 app.get('/', (req, res) => {
     res.send("Hello World!!!");
+});
+
+let filesPath = './routes';
+fs.readdirSync(filesPath).forEach(function(file) {
+    if(~file.indexOf('.js')) {
+        let route = require(filesPath + "/" + file);
+        route.setRouter(app);
+    }
 });
 
 app.listen(appconfig.port, () => {

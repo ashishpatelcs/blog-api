@@ -1,8 +1,10 @@
 const express = require('express');
 
 let setRouter = (app) => {
-    app.get('/hello-world', () => console.log("Hello World!"));
-    app.get('/example-route', () => console.log("Example Route"));
+    app.get('/hello-world', (req, res) => res.send("Hello World!"));
+    app.get('/example-route', (req, res) => res.send("Example Route"));
 }
 
-module.exports = setRouter;
+module.exports = {
+    setRouter: setRouter 
+}
