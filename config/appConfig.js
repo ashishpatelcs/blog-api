@@ -7,3 +7,5 @@ appConfig.db = {
     url: 'mongodb://test:test@127.0.0.1:27017/blogDB'
 }
 appConfig.apiVersion = '/api/v1'
+
+module.exports = appConfig;
