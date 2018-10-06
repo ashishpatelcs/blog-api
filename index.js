@@ -5,6 +5,6 @@ app.get('/', (req, res) => {
     res.send("Hello World!");
 });
 
-app.listen(PORT, () => {
-    console.log("Server is running at http://localhost:3000/");
+app.listen(appconfig.port, () => {
+    console.log(`Server is running at http://localhost:${appconfig.port}/`);
 });
