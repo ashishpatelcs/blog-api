@@ -18,7 +18,16 @@ fs.readdirSync(filesPath).forEach(function(file) {
 });
 
 // database connection
-var db = mongoose.connect(appconfig.db.url)
+mongoose.connect(appconfig.db.url)
+db = mongoose.connection
+db.on('error', (err) => {
+    console.log('connection error occured!');
+})
+
+db.once('open', () => {
+    console.log('connection successful');
+})
+
 
 app.listen(appconfig.port, () => {
     console.log(`Server is running at http://localhost:${appconfig.port}/`);
