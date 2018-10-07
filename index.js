@@ -9,13 +9,21 @@ app.get('/', (req, res) => {
     res.send("Hello World!!!");
 });
 
-let filesPath = './routes';
+// bootstrap the routes
+let filesPath = './routes'
 fs.readdirSync(filesPath).forEach(function(file) {
     if(~file.indexOf('.js')) {
         let route = require(filesPath + "/" + file);
         route.setRouter(app);
     }
 });
+
+// bootstrap the models
+let modelsPath = './models'
+fs.readdirSync(modelsPath).forEach(function(file) {
+    if(~file.indexOf('.js'))
+        require(modelsPath + '/' + file);
+})
 
 // database connection
 mongoose.connect(appconfig.db.url)

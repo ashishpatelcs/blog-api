@@ -11,5 +11,8 @@ let blogSchema = new Schema({
     category: { type: String, default: '' },
     author: { type: String, default: '' },
     tags: [],
-    created: { type: Date, default: Date.now }
+    created: { type: Date, default: Date.now },
+    lastModified: { type: Date, default: Date.now }
 })
+
+mongoose.model('Blog', blogSchema);
