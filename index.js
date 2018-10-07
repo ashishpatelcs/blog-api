@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const appconfig = require('./config/appConfig');
 
 const app = express();
@@ -15,6 +16,9 @@ fs.readdirSync(filesPath).forEach(function(file) {
         route.setRouter(app);
     }
 });
+
+// database connection
+mongoose.connect('mongodb://localhost/blogDB');
 
 app.listen(appconfig.port, () => {
     console.log(`Server is running at http://localhost:${appconfig.port}/`);
