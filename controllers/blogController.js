@@ -34,13 +34,54 @@ let viewBlogById = (req, res) => {
     })
 }
 
-function viewBlogsByAuthor(req, res) {  
+let viewBlogsByAuthor = (req, res) => {  
+    let author = req.params.author
+    Blog.find({ author }, { _id: 0, __v: 0 })
+    .then(blog => {
+        res.json({
+            status: 200,
+            message: 'success',
+            data: blog
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: 'some error occured' 
+        })
+    })
 }
 
-function viewBlogsByCategory(req, res) {
+let viewBlogsByCategory = (req, res) => {
+    let category = req.params.category
+    Blog.find({ category }, { _id: 0, __v: 0 })
+    .then(blog => {
+        res.json({
+            status: 200,
+            message: 'success',
+            data: blog
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: 'some error occured' 
+        })
+    })
 }
 
-function deleteBlogById(req, res) { 
+let deleteBlogById = (req, res) => { 
+    let blogId = req.params.blogId
+    Blog.findOneAndRemove({ blogId })
+    .then(post => {
+        res.json({
+            status: 200,
+            message: 'blog with id : ' + blogId + ' deleted successfully'
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: 'some error occured' 
+        })
+    })
 }
 
 let editBlogById = (req, res) => {
