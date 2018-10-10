@@ -84,7 +84,32 @@ let createBlog = (req, res) => {
     })
 }
 
-function increaseBlogViews(req, res) {
+let increaseBlogViews = (req, res) => {
+    let blogId = req.params.blogId
+    Blog.find({ blogId })
+    .then(blog => {
+        let post = blog[0]
+        post.views += 1
+        // console.log(post)
+        Blog.findOneAndUpdate(blogId, post, {new: true})
+        .then(post => {
+            res.json({
+                status: 200,
+                message: 'success',
+                data: post
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: 'some error occured' 
+            })
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: 'some error' 
+        })
+    })
 }
 
 module.exports = {
