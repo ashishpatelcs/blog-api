@@ -11,13 +11,15 @@ const appconfig = require('./config/appConfig')
 
 const app = express()
 
+// api doc route
+app.use('/apidoc', express.static('./apidoc'))
+
 // middlewares
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(errorMiddleware.errorHandler)
 app.use(routeLoggerMiddleware.logIP)
-
 
 // bootstrap the models
 let modelsPath = './models'
