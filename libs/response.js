@@ -1,5 +1,5 @@
 
-let generate = (error, message, status, data) {
+let generate = (error, message, status, data) => {
     return {
         error,
         message,
