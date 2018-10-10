@@ -15,4 +15,4 @@ let blogSchema = new Schema({
     lastModified: { type: Date, default: Date.now }
 })
 
-mongoose.model('Blog', blogSchema);
+module.exports = mongoose.model('Blog', blogSchema);
