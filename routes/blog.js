@@ -1,9 +1,11 @@
-const express = require('express');
-const blogcontroller = require('./../controllers/blogController');
+const express = require('express')
+const blogcontroller = require('./../controllers/blogController')
 
 let setRouter = (app) => {
-    app.get('/hello-world', blogcontroller.helloWorld);
-    app.get('/example-route', blogcontroller.exampleRoute);
+    app.get('/', blogcontroller.homePage)
+
+    app.get('/hello-world', blogcontroller.helloWorld)
+    app.get('/example-route', blogcontroller.exampleRoute)
 }
 
 module.exports = {
