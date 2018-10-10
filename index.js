@@ -1,9 +1,11 @@
 const express = require('express')
 const fs = require('fs')
 const mongoose = require('mongoose')
+
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const errorMiddleware = require('./middlewares/appErrorHandler')
+const routeLoggerMiddleware = require('./middlewares/routeLogger')
 
 const appconfig = require('./config/appConfig')
 
@@ -14,6 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(errorMiddleware.errorHandler)
+app.use(routeLoggerMiddleware.logIP)
 
 
 // bootstrap the models
