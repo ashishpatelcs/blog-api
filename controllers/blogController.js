@@ -27,7 +27,7 @@ let viewBlogById = (req, res) => {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
-            const apiResponse = response.generate(false, 'All blog details found', 200, blog)
+            const apiResponse = response.generate(false, 'blog with id ' + blogId + ' found!', 200, blog)
             res.json(apiResponse)
         }
     })
@@ -45,7 +45,7 @@ let viewBlogsByAuthor = (req, res) => {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
-            const apiResponse = response.generate(false, 'All blog details found', 200, blogs)
+            const apiResponse = response.generate(false, 'All blog  with ' + author + ' as author found', 200, blogs)
             res.json(apiResponse)
         }
     })
@@ -63,7 +63,7 @@ let viewBlogsByCategory = (req, res) => {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
-            const apiResponse = response.generate(false, 'All blog details found', 200, blogs)
+            const apiResponse = response.generate(false, 'All blog with ' + category + ' category found', 200, blogs)
             res.json(apiResponse)
         }
     })
@@ -97,7 +97,7 @@ let editBlogById = (req, res) => {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
-            const apiResponse = response.generate(false, 'All blog details found', 200, blog)
+            const apiResponse = response.generate(false, 'blog editted successfully', 200, blog)
             res.json(apiResponse)
         }
     })
@@ -120,7 +120,7 @@ let createBlog = (req, res) => {
             const apiResponse = response.generate(true, 'No Blog Found', 404, null)
             res.json(apiResponse)
         } else {
-            const apiResponse = response.generate(false, 'Blog editted successfully', 200, blog)
+            const apiResponse = response.generate(false, 'Blog created successfully', 200, blog)
             res.json(apiResponse)
         }
     })
