@@ -3,6 +3,8 @@ const fs = require('fs')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+const errorMiddleware = require('./middlewares/appErrorHandler')
+
 const appconfig = require('./config/appConfig')
 
 const app = express()
@@ -11,6 +13,15 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(errorMiddleware.errorHandler)
+
+
+// bootstrap the models
+let modelsPath = './models'
+fs.readdirSync(modelsPath).forEach(function(file) {
+    if(~file.indexOf('.js'))
+        require(modelsPath + '/' + file)
+})
 
 // bootstrap the routes
 let filesPath = './routes'
@@ -21,12 +32,8 @@ fs.readdirSync(filesPath).forEach(function(file) {
     }
 })
 
-// bootstrap the models
-let modelsPath = './models'
-fs.readdirSync(modelsPath).forEach(function(file) {
-    if(~file.indexOf('.js'))
-        require(modelsPath + '/' + file)
-})
+// global 404 not found handler
+app.use(errorMiddleware.notFoundHandler)
 
 // database connection
 mongoose.connect(appconfig.db.url)
