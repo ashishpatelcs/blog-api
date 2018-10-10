@@ -1,10 +1,11 @@
 const appconfig = require('../config/appConfig')
+const time = require('../libs/time')
 
 let logIP = (req, res, next) => {
     let remoteIP = req.connection.remoteAddress + '://' + req.connection.remotePort
     let realIP = req.headers['X-REAL-IP']
 
-    console.log(req.method + ' request made from ' + remoteIP + ' for route ' + req.originalUrl)
+    console.log(time.now() + ' :: ' + req.method + ' request made from ' + remoteIP + ' for route ' + req.originalUrl)
     
     if (req.method === 'OPTIONS') {
         console.log('!OPTIONS')

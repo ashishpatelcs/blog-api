@@ -1,11 +1,13 @@
 const Blog = require('../models/Blog')
 const shortid = require('shortid')
 const response = require('../libs/response')
+const time = require('../libs/time')
+const check = require('../libs/check')
 
 let getAllBlogs = (req, res) => {
     Blog.find({}, {_id: 0, __v: 0})
     .then(blogs => {
-        if (blogs === null || blogs === undefined || blogs.length < 1) {
+        if (check.isEmpty(blogs)) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -23,7 +25,7 @@ let viewBlogById = (req, res) => {
     let blogId = req.params.blogId
     Blog.find({ blogId }, { _id: 0, __v: 0 })
     .then(blog => {
-        if (blog === null || blog === undefined || blog.length < 1) {
+        if (check.isEmpty(blog)) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -41,7 +43,7 @@ let viewBlogsByAuthor = (req, res) => {
     let author = req.params.author
     Blog.find({ author }, { _id: 0, __v: 0 })
     .then(blogs => {
-        if (blogs === null || blogs === undefined || blogs.length < 1) {
+        if (check.isEmpty(blogs)) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -59,7 +61,7 @@ let viewBlogsByCategory = (req, res) => {
     let category = req.params.category
     Blog.find({ category }, { _id: 0, __v: 0 })
     .then(blogs => {
-        if (blogs === null || blogs === undefined || blogs.length < 1) {
+        if (check.isEmpty(blogs)) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -88,12 +90,12 @@ let deleteBlogById = (req, res) => {
 
 let editBlogById = (req, res) => {
     let blog = req.body
-    blog.lastModified = new Date()
+    blog.lastModified = time.now()
     let id = req.params.blogId
 
     Blog.findOneAndUpdate(id, blog, {new: true})
     .then(blog => {
-        if (blog === null || blog === undefined || blog.length < 1) {
+        if (check.isEmpty(blog)) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -111,12 +113,14 @@ let createBlog = (req, res) => {
     let blog = req.body
     blog.blogId = shortid.generate()
     blog.isPublished = true
+    blog.created = time.now()
+    blog.lastModified = time.now()
 
     blog.tags = (blog.tags) ? blog.tags.split(',') : []
 
     Blog.create(blog)
     .then(blog => {
-        if (blog === null || blog === undefined || blog.length < 1) {
+        if (check.isEmpty(blog)) {
             const apiResponse = response.generate(true, 'No Blog Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -139,7 +143,7 @@ let increaseBlogViews = (req, res) => {
         // console.log(post)
         Blog.findOneAndUpdate(blogId, post, {new: true})
         .then(blog => {
-            if (blog === null || blog === undefined || blog.length < 1) {
+            if (check.isEmpty(blog)) {
                 const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
                 res.json(apiResponse)
             } else {
