@@ -1,10 +1,33 @@
+function getAllBlogs(req, res) {
 
-function helloWorld(req, res) {
-    res.send("Hello World");
 }
 
-function exampleRoute(req, res) {
-    res.send("Example Route!");
+function viewBlogById(req, res) {
+
+}
+
+function viewBlogsByAuthor(req, res) {
+    
+}
+
+function viewBlogsByCategory(req, res) {
+    
+}
+
+function deleteBlogById(req, res) {
+    
+}
+
+function editBlogById(req, res) {
+    
+}
+
+function createBlog(req, res) {
+    
+}
+
+function increaseBlogViews(req, res) {
+    
 }
 
 module.exports = {
