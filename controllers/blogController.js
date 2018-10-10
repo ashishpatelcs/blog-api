@@ -5,7 +5,7 @@ const response = require('../libs/response')
 let getAllBlogs = (req, res) => {
     Blog.find({}, {_id: 0, __v: 0})
     .then(blogs => {
-        if (blogs === null || blogs === undefined || blogs === '') {
+        if (blogs === null || blogs === undefined || blogs.length < 1) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -23,7 +23,7 @@ let viewBlogById = (req, res) => {
     let blogId = req.params.blogId
     Blog.find({ blogId }, { _id: 0, __v: 0 })
     .then(blog => {
-        if (blog === null || blog === undefined || blog === '') {
+        if (blog === null || blog === undefined || blog.length < 1) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -41,7 +41,7 @@ let viewBlogsByAuthor = (req, res) => {
     let author = req.params.author
     Blog.find({ author }, { _id: 0, __v: 0 })
     .then(blogs => {
-        if (blogs === null || blogs === undefined || blogs === '') {
+        if (blogs === null || blogs === undefined || blogs.length < 1) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -59,7 +59,7 @@ let viewBlogsByCategory = (req, res) => {
     let category = req.params.category
     Blog.find({ category }, { _id: 0, __v: 0 })
     .then(blogs => {
-        if (blogs === null || blogs === undefined || blogs === '') {
+        if (blogs === null || blogs === undefined || blogs.length < 1) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -93,7 +93,7 @@ let editBlogById = (req, res) => {
 
     Blog.findOneAndUpdate(id, blog, {new: true})
     .then(blog => {
-        if (blog === null || blog === undefined || blog === '') {
+        if (blog === null || blog === undefined || blog.length < 1) {
             const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -116,7 +116,7 @@ let createBlog = (req, res) => {
 
     Blog.create(blog)
     .then(blog => {
-        if (blog === null || blog === undefined || blog === '') {
+        if (blog === null || blog === undefined || blog.length < 1) {
             const apiResponse = response.generate(true, 'No Blog Found', 404, null)
             res.json(apiResponse)
         } else {
@@ -139,7 +139,7 @@ let increaseBlogViews = (req, res) => {
         // console.log(post)
         Blog.findOneAndUpdate(blogId, post, {new: true})
         .then(blog => {
-            if (blog === null || blog === undefined || blog === '') {
+            if (blog === null || blog === undefined || blog.length < 1) {
                 const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
                 res.json(apiResponse)
             } else {
