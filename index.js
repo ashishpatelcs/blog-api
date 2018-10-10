@@ -1,6 +1,8 @@
 const express = require('express')
 const fs = require('fs')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 const appconfig = require('./config/appConfig')
 
 const app = express()
