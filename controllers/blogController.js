@@ -157,11 +157,20 @@ let createBlog = (req, res) => {
 
 let increaseBlogViews = (req, res) => {
     let blogId = req.params.blogId
-    Blog.find({ blogId })
+    Blog.findOneAndUpdate({ blogId }, { $inc: {'views' : 1} }, {new: true})
     .then(blog => {
-        let post = blog[0]
-        post.views += 1
-        // console.log(post)
+        if (check.isEmpty(blog)) {
+            logger.captureError('No Blogs Found', 'blogControler : increaseBlogViews', 5)
+            const apiResponse = response.generate(true, 'No Blogs Found', 404, null)
+            res.json(apiResponse)
+        } else {
+            logger.captureInfo('blog with id ' + blogId + ' views count increased!', 'blogControler : increaseBlogViews', 0)
+            const apiResponse = response.generate(false, 'blog views count increased!', 200, blog)
+            res.json(apiResponse)
+        }
+        /*let post = {}
+        post.views = blog[0].views + 1
+        console.log(post)
         Blog.findOneAndUpdate(blogId, post, {new: true})
         .then(blog => {
             if (check.isEmpty(blog)) {
@@ -175,9 +184,11 @@ let increaseBlogViews = (req, res) => {
             }
         })
         .catch(error => {
+            logger.captureError('Error occured: ' + error, 'blogControler : increaseBlogViews', 10)
             const apiResponse = response.generate(true, 'Error occured!', 500, null)
             res.json(apiResponse)
         })
+        */
     })
     .catch(error => {
         logger.captureError('Error occured: ' + error, 'blogControler : increaseBlogViews', 10)
