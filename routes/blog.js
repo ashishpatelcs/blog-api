@@ -1,11 +1,12 @@
- const express = require('express')
+const express = require('express')
 const blogcontroller = require('./../controllers/blogController')
 const appconfig = require('../config/appConfig')
+const auth = require('../middlewares/auth')
 
 let setRouter = (app) => {
-    let BASEURL = appconfig.apiVersion + '/blogs'
+	let BASEURL = appconfig.apiVersion + '/blogs'
 
-    app.get(BASEURL + '/all', blogcontroller.getAllBlogs)
+    app.get(BASEURL + '/all', auth.isAuthenticated, blogcontroller.getAllBlogs)
     /**
 	 * @api {get} /api/v1/blogs/all Get All The Blog Posts.
 	 * @apiVersion 1.0.0
@@ -46,7 +47,7 @@ let setRouter = (app) => {
 	   }
 	 */
 
-    app.get(BASEURL + '/view/:blogId', blogcontroller.viewBlogById)
+    app.get(BASEURL + '/view/:blogId', auth.isAuthenticated, blogcontroller.viewBlogById)
     /**
 	 * @api {get} /api/v1/blogs/view/:blogId Get A Single Blog Post.
 	 * @apiVersion 1.0.0
@@ -88,7 +89,7 @@ let setRouter = (app) => {
 	   }
 	 */
 
-    app.get(BASEURL + '/view/author/:author', blogcontroller.viewBlogsByAuthor)
+    app.get(BASEURL + '/view/author/:author', auth.isAuthenticated, blogcontroller.viewBlogsByAuthor)
     /**
 	 * @api {get} /api/v1/blogs/view/by/author/:author Get All Blogs By A Particular Author.
 	 * @apiVersion 1.0.0
@@ -130,7 +131,7 @@ let setRouter = (app) => {
 	   }
 	 */
 
-    app.get(BASEURL + '/view/category/:category', blogcontroller.viewBlogsByCategory)
+    app.get(BASEURL + '/view/category/:category', auth.isAuthenticated, blogcontroller.viewBlogsByCategory)
     /**
 	 * @api {get} /api/v1/blogs/view/by/category/:category Get All Blogs From A Particular Category.
 	 * @apiVersion 1.0.0
@@ -172,7 +173,7 @@ let setRouter = (app) => {
 	   }
 	 */
 
-    app.post(BASEURL + '/:blogId/delete', blogcontroller.deleteBlogById)
+    app.post(BASEURL + '/:blogId/delete', auth.isAuthenticated, blogcontroller.deleteBlogById)
     /**
 	 * @api {post} /api/v1/blogs/:blogId/delete Delete A Blog By blogId.
 	 * @apiVersion 1.0.0
@@ -200,7 +201,7 @@ let setRouter = (app) => {
 	   }
 	 */
 
-    app.put(BASEURL + '/:blogId/edit', blogcontroller.editBlogById)
+    app.put(BASEURL + '/:blogId/edit', auth.isAuthenticated, blogcontroller.editBlogById)
     /**
 	 * @api {put} /api/v1/blogs/:blogId/edit Edit A Blog By blogId.
 	 * @apiVersion 1.0.0
@@ -242,7 +243,7 @@ let setRouter = (app) => {
 	   }
 	 */
 
-    app.post(BASEURL + '/create', blogcontroller.createBlog)
+    app.post(BASEURL + '/create', auth.isAuthenticated, blogcontroller.createBlog)
     /**
 	 * @api {post} /api/v1/blogs/create Create A Blog Post.
 	 * @apiVersion 1.0.0
@@ -287,7 +288,7 @@ let setRouter = (app) => {
 	   }
 	 */
 
-    app.post(BASEURL + '/:blogId/count/view', blogcontroller.increaseBlogViews)
+    app.post(BASEURL + '/:blogId/count/view', auth.isAuthenticated, blogcontroller.increaseBlogViews)
     /**
 	 * @api {get} /api/v1/blogs/:blogId/count/view Increase A Blogs View Count.
 	 * @apiVersion 1.0.0
